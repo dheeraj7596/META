@@ -1,0 +1,6 @@
+authors
+publisher
+publication_year
+authors,publisher
+authors,publication_year
+publisher,publication_year

@@ -1,0 +1,11 @@
+{
+  "authors": {
+    "separator" : ","
+  },
+  "publisher": {
+    "separator" : null
+  },
+  "publication_year": {
+    "separator": null
+  }
+}
