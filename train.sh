@@ -2,6 +2,8 @@ GPU=$1
 dataset_path=$2
 tmp_path=$3
 
+echo "Cloning AutoPhrase.."
+git clone https://github.com/shangjingbo1226/AutoPhrase.git AutoPhrase
 echo "Getting phrases.."
 python3 util/write_to_file.py ${dataset_path}
 cd AutoPhrase

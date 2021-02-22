@@ -255,6 +255,7 @@ if __name__ == "__main__":
                                        fnust_graph_node_count)
     graph_dict["phrase"] = phrase_graph
 
+    json.dump(label_term_dict, open(tmp_path + "seedwords_fnust.json", "w"))
     pickle.dump(df, open(tmp_path + "df_phrase_removed_stopwords.pkl", "wb"))
     pickle.dump(graph_dict, open(tmp_path + "graph_dict.pkl", "wb"))
     pickle.dump(entity_node_id_dict, open(tmp_path + "entity_node_id_dict.pkl", "wb"))
