@@ -120,6 +120,7 @@ def create_dicts(df, motif_patterns, config):
         count = len(df)
         entity_id = {}
         id_entity = {}
+        entity_docid = {}
 
         entity_set = set()
         if length == 1:
@@ -129,9 +130,9 @@ def create_dicts(df, motif_patterns, config):
                 entity_set.update(ent)
                 for e in ent:
                     try:
-                        entity_docid_dict[e].add(i)
+                        entity_docid[e].add(i)
                     except:
-                        entity_docid_dict[e] = {i}
+                        entity_docid[e] = {i}
         elif length == 2:
             first = mot_pat[0]
             second = mot_pat[1]
@@ -142,9 +143,9 @@ def create_dicts(df, motif_patterns, config):
                 entity_set.update(temp_ents)
                 for temp_ent in temp_ents:
                     try:
-                        entity_docid_dict[temp_ent].add(i)
+                        entity_docid[temp_ent].add(i)
                     except:
-                        entity_docid_dict[temp_ent] = {i}
+                        entity_docid[temp_ent] = {i}
         else:
             raise Exception(
                 "Currently only motif patterns of size upto 2 are supported. The code can be easily extended to multiple ones.")
@@ -157,6 +158,7 @@ def create_dicts(df, motif_patterns, config):
         entity_node_id_dict[mot_pat] = entity_id
         node_id_entity_dict[mot_pat] = id_entity
         node_count_dict[mot_pat] = count
+        entity_docid_dict[mot_pat] = entity_docid
 
     return entity_node_id_dict, node_id_entity_dict, node_count_dict, entity_docid_dict
 
@@ -256,6 +258,7 @@ if __name__ == "__main__":
     graph_dict["phrase"] = phrase_graph
 
     json.dump(label_term_dict, open(tmp_path + "seedwords_fnust.json", "w"))
+    pickle.dump(tokenizer, open(data_path + "tokenizer.pkl", "wb"))
     pickle.dump(df, open(tmp_path + "df_phrase_removed_stopwords.pkl", "wb"))
     pickle.dump(graph_dict, open(tmp_path + "graph_dict.pkl", "wb"))
     pickle.dump(entity_node_id_dict, open(tmp_path + "entity_node_id_dict.pkl", "wb"))
