@@ -1,6 +1,6 @@
 {
   "authors": {
-    "separator" : ","
+    "separator" : null
   },
   "publisher": {
     "separator" : null

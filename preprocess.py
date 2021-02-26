@@ -124,9 +124,9 @@ def create_dicts(df, motif_patterns, config):
 
         entity_set = set()
         if length == 1:
-            mot_pat = mot_pat[0]
+            first = mot_pat[0]
             for i, row in df.iterrows():
-                ent = get_entity_from_col(row[mot_pat], mot_pat, config)
+                ent = get_entity_from_col(row[first], first, config)
                 entity_set.update(ent)
                 for e in ent:
                     try:
@@ -163,18 +163,18 @@ def create_dicts(df, motif_patterns, config):
     return entity_node_id_dict, node_id_entity_dict, node_count_dict, entity_docid_dict
 
 
-def create_graphs(df, motif_patterns, entity_id_dict, node_count_dict, config):
+def create_graphs(df, motif_patterns, entity_node_id_dict, node_count_dict, config):
     graph_dict = {}
     for mot_pat in motif_patterns:
-        entity_id = entity_id_dict[mot_pat]
+        entity_id = entity_node_id_dict[mot_pat]
         node_count = node_count_dict[mot_pat]
         edges = []
         weights = []
         length = len(mot_pat)
         if length == 1:
-            mot_pat = mot_pat[0]
+            first = mot_pat[0]
             for i, row in df.iterrows():
-                ent = get_entity_from_col(row[mot_pat], mot_pat, config)
+                ent = get_entity_from_col(row[first], first, config)
                 for e in ent:
                     edges.append([i, entity_id[e]])
                     weights.append(1)
@@ -217,7 +217,7 @@ if __name__ == "__main__":
     data_path = sys.argv[1]
     tmp_path = sys.argv[2]
 
-    df = pickle.load(open(tmp_path + "df_phrase.pkl", "wb"))
+    df = pickle.load(open(tmp_path + "df_phrase.pkl", "rb"))
 
     f = open(data_path + "motif_patterns.txt", "r")
     motif_lines = f.readlines()
@@ -251,7 +251,7 @@ if __name__ == "__main__":
     entity_docid_dict["phrase"] = phrase_doc_id_map
 
     print("Creating Graphs..")
-    graph_dict = create_graphs(df, motif_patterns, entity_node_id_dict, node_id_entity_dict, node_count_dict)
+    graph_dict = create_graphs(df, motif_patterns, entity_node_id_dict, node_count_dict, config)
 
     phrase_graph = create_phrase_graph(df, tokenizer, index_word, id_phrase_map, non_phrase_seeds, fnust_id,
                                        fnust_graph_node_count)

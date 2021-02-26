@@ -1,0 +1,46 @@
+{
+  "children": [
+    "picture book",
+    "illustrator",
+    "junie b",
+    "little critter",
+    "rachel and kirsty"
+  ],
+  "young_adult": [
+    "sweet valley high",
+    "high school",
+    "the princess diaries",
+    "the hunger games"
+  ],
+  "comics_graphic": [
+    "batman",
+    "superman",
+    "marvel"
+  ],
+  "fantasy_paranormal": [
+    "supernatural",
+    "fantasy",
+    "monster hunter",
+    "jane yellowrock"
+  ],
+  "history_biography": [
+    "history",
+    "world war",
+    "world war ii"
+  ],
+  "mystery_thriller_crime": [
+    "serial killer",
+    "sherlock holmes",
+    "stephanie plum"
+  ],
+  "poetry": [
+    "poems",
+    "poetry",
+    "poet"
+  ],
+  "romance": [
+    "broken heart",
+    "erotic romance",
+    "romance"
+  ]
+}

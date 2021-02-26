@@ -16,5 +16,5 @@ cd AutoPhrase
 ./phrasal_segmentation.sh
 cd ..
 cp AutoPhrase/models/DBLP/segmentation.txt ${tmp_path}/segmentation.txt
-python3 util/parse_autophrase_output.py ${tmp_path} ${dataset_path}
+python3 util/parse_autophrase_output.py ${dataset_path} ${tmp_path}
 #python3 preprocess.py ${dataset_path} ${tmp_path}

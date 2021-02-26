@@ -5,12 +5,15 @@ from sklearn.model_selection import train_test_split
 
 
 def get_entity_from_col(ent, mot_pat, config) -> set:
-    separator = config[mot_pat]
+    separator = config[mot_pat]["separator"]
     if separator is None:
-        try:
-            return set(ent)
-        except:
+        if isinstance(ent, str):
             return {ent}
+        else:
+            try:
+                return set(ent)
+            except:
+                return {ent}
     else:
         return set(ent.split(separator))
 

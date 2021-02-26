@@ -17,8 +17,8 @@ def decrypt(val):
 
 
 if __name__ == "__main__":
-    tmp_path = sys.argv[1]
-    data_path = sys.argv[2]
+    data_path = sys.argv[1]
+    tmp_path = sys.argv[2]
     out_path = tmp_path + "segmentation.txt"
     df = pickle.load(open(data_path + "df.pkl", "rb"))
     f = open(out_path, "r")
