@@ -55,7 +55,7 @@ def train_word2vec(df, tokenizer, word_index, index_word):
     vocabulary = list(word_index.keys())
     int_to_vocab = index_word
 
-    print("Size of vocabulary: ", len(vocabulary))
+    print("Size of vocabulary: ", len(vocabulary), flush=True)
 
     current_words, context_words = get_idx_pairs(df, tokenizer)
 
@@ -131,7 +131,7 @@ def train_word2vec(df, tokenizer, word_index, index_word):
                     print("Epoch {}/{}".format(e, epochs),
                           "Iteration: {}".format(iteration),
                           "Avg. Training loss: {:.4f}".format(loss / 100),
-                          "{:.4f} sec/batch".format((end - start) / 100))
+                          "{:.4f} sec/batch".format((end - start) / 100), flush=True)
                     loss = 0
                     start = time.time()
 
@@ -147,7 +147,7 @@ def train_word2vec(df, tokenizer, word_index, index_word):
                         for k in range(top_k):
                             close_word = int_to_vocab[nearest[k]]
                             log = '%s %s,' % (log, close_word)
-                        print(log)
+                        print(log, flush=True)
 
                 iteration += 1
         embed_mat = sess.run(normalized_embedding)
@@ -224,35 +224,35 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
     max_sentences = 15
     max_words = 20000
 
-    print("Generating pseudo-labels")
+    print("Generating pseudo-labels", flush=True)
     X, y = generate_pseudo_labels(df, labels, motpat_label_motifs_dict, tokenizer, index_word, config)
     y_vec = make_one_hot(y, label_to_index)
 
-    print("Splitting into train, dev...")
+    print("Splitting into train, dev...", flush=True)
     X_train, y_train, X_val, y_val = create_train_dev(X, labels=y_vec, tokenizer=tokenizer,
                                                       max_sentences=max_sentences,
                                                       max_sentence_length=max_sentence_length,
                                                       max_words=max_words)
 
-    print("Initializing model...")
+    print("Initializing model...", flush=True)
     model = HAN(max_words=max_sentence_length, max_sentences=max_sentences, output_size=len(y_train[0]),
                 embedding_matrix=embedding_matrix)
-    print("Compiling model...")
+    print("Compiling model...", flush=True)
     model.summary()
     model.compile(loss="categorical_crossentropy", optimizer='adam', metrics=['acc'])
-    print("model fitting - Hierachical attention network...")
+    print("model fitting - Hierachical attention network...", flush=True)
     es = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=3)
     mc = ModelCheckpoint(filepath=tmp_dir + 'model.{epoch:02d}-{val_loss:.2f}.hdf5', monitor='val_acc', mode='max',
                          verbose=1, save_weights_only=True, save_best_only=True)
     model.fit(X_train, y_train, validation_data=(X_val, y_val), nb_epoch=100, batch_size=256, callbacks=[es, mc])
-    print("****************** CLASSIFICATION REPORT FOR All DOCUMENTS ********************")
+    print("****************** CLASSIFICATION REPORT FOR All DOCUMENTS ********************", flush=True)
     X_all = prep_data(texts=df["text"], max_sentences=max_sentences, max_sentence_length=max_sentence_length,
                       tokenizer=tokenizer)
     y_true_all = df["label"]
     pred = model.predict(X_all)
     pred_labels = get_from_one_hot(pred, index_to_label)
-    print(classification_report(y_true_all, pred_labels))
-    print("Dumping the model...")
+    print(classification_report(y_true_all, pred_labels), flush=True)
+    print("Dumping the model...", flush=True)
     model.save_weights(dump_dir + "model_weights_" + model_name + ".h5")
     model.save(dump_dir + "model_" + model_name + ".h5")
     return pred_labels, pred
@@ -287,7 +287,7 @@ def expand_motifs(df, probs, labels, motpat_label_motifs_dict, graph_dict, entit
         start = len(df)
         count = len(df) + len(entity_node_id)
         for l in label_to_index:
-            print("Pagerank running for: ", l)
+            print("Pagerank running for: ", l, flush=True)
             personalized = np.zeros((count,))
             personalized[:len(df)] = probs[:, label_to_index[l]]
             pr = pagerank(G, p=0.85, personalize=personalized)
@@ -379,11 +379,12 @@ def main(data_path, tmp_path, print_flag=True):
     labels, label_to_index, index_to_label = get_distinct_labels(df)
 
     try:
-        embedding_matrix = pickle.load(open(data_path + "embedding_matrix.pkl", "wb"))
-        print("Embedding matrix available.. Loading embedding matrix..")
+        embedding_matrix = pickle.load(open(data_path + "embedding_matrix.pkl", "rb"))
+        print("Embedding matrix available.. Loading embedding matrix..", flush=True)
     except:
-        print("Training Word2Vec to get embedding matrix..")
+        print("Training Word2Vec to get embedding matrix..", flush=True)
         embedding_matrix = train_word2vec(df, tokenizer, word_to_index, index_to_word)
+        pickle.dump(embedding_matrix, open(data_path + "embedding_matrix.pkl", "wb"))
 
     motpat_label_motifs_dict = {}
     for mot_pat in entity_node_id_dict:
@@ -393,7 +394,7 @@ def main(data_path, tmp_path, print_flag=True):
             motpat_label_motifs_dict[mot_pat] = {}
 
     for i in range(9):
-        print("ITERATION: ", i)
+        print("ITERATION: ", i, flush=True)
         pred_labels, pred_probs = train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motifs_dict,
                                                    label_to_index, index_to_label, index_to_word, data_path, config)
         motpat_label_motifs_dict = expand_motifs(df, pred_probs, labels, motpat_label_motifs_dict, graph_dict,
@@ -401,13 +402,13 @@ def main(data_path, tmp_path, print_flag=True):
                                                  label_to_index)
         if print_flag:
             for mot_pat in motpat_label_motifs_dict:
-                print("Printing entities of motif pattern:", mot_pat)
+                print("Printing entities of motif pattern:", mot_pat, flush=True)
                 label_motifs_dict = motpat_label_motifs_dict[mot_pat]
                 if mot_pat == "phrase":
                     print_label_phrase_dict(label_motifs_dict, id_phrase_map)
                 else:
                     print_label_motifs_dict(label_motifs_dict)
-        print("#" * 80)
+        print("#" * 80, flush=True)
 
 
 if __name__ == "__main__":
@@ -418,6 +419,12 @@ if __name__ == "__main__":
 
     if use_gpu:
         os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
+        from keras.backend.tensorflow_backend import set_session
+
+        config = tf.compat.v1.ConfigProto()
+        config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+        sess = tf.compat.v1.Session(config=config)
+        set_session(sess)
 
     main(
         data_path=data_path,

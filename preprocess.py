@@ -238,7 +238,7 @@ if __name__ == "__main__":
     meta_cols, motif_patterns = get_motif_patterns(df, motif_lines)
     verify_config(df, config)
 
-    print("Creating Dictionaries..")
+    print("Creating Dictionaries..", flush=True)
     entity_node_id_dict, node_id_entity_dict, node_count_dict, entity_docid_dict = create_dicts(df, motif_patterns,
                                                                                                 config)
     fnust_id, id_fnust, fnust_graph_node_count = make_phrases_map(df, tokenizer, index_word, id_phrase_map,
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     node_count_dict["phrase"] = fnust_graph_node_count
     entity_docid_dict["phrase"] = phrase_doc_id_map
 
-    print("Creating Graphs..")
+    print("Creating Graphs..", flush=True)
     graph_dict = create_graphs(df, motif_patterns, entity_node_id_dict, node_count_dict, config)
 
     phrase_graph = create_phrase_graph(df, tokenizer, index_word, id_phrase_map, non_phrase_seeds, fnust_id,

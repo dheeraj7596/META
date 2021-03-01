@@ -48,7 +48,7 @@ def detect_phrase(sentence, tokenizer, index_word, id_phrase_map, idx):
                         if int(num_str[:index]) in id_phrase_map:
                             temp.append(index_word[tok])
                     else:
-                        print(idx, index_word[tok])
+                        print(idx, index_word[tok], flush=True)
             else:
                 temp.append(index_word[tok])
         except Exception as e:
@@ -147,21 +147,21 @@ def get_from_one_hot(pred, index_to_label):
 
 def print_label_phrase_dict(label_phrase_dict, id_phrase_map):
     for label in label_phrase_dict:
-        print(label)
-        print("*" * 80)
-        print("Number of phrases: ", len(label_phrase_dict[label]))
+        print(label, flush=True)
+        print("*" * 80, flush=True)
+        print("Number of phrases: ", len(label_phrase_dict[label]), flush=True)
         for key in label_phrase_dict[label]:
             id = decrypt(key)
             if id is None:
-                print(key, label_phrase_dict[label][key])
+                print(key, label_phrase_dict[label][key], flush=True)
             else:
-                print(id_phrase_map[id], label_phrase_dict[label][key])
+                print(id_phrase_map[id], label_phrase_dict[label][key], flush=True)
 
 
 def print_label_motifs_dict(label_entity_dict):
     for label in label_entity_dict:
-        print(label)
-        print("*" * 80)
-        print("Number of entities: ", len(label_entity_dict[label]))
+        print(label, flush=True)
+        print("*" * 80, flush=True)
+        print("Number of entities: ", len(label_entity_dict[label]), flush=True)
         for key in label_entity_dict[label]:
-            print(key, label_entity_dict[label][key])
+            print(key, label_entity_dict[label][key], flush=True)

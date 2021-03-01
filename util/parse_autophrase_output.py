@@ -53,6 +53,6 @@ if __name__ == "__main__":
     for ph in phrase_id_map:
         id_phrase_map[phrase_id_map[ph]] = ph
 
-    print("Number of phrases: ", len(phrase_id_map))
+    print("Number of phrases: ", len(phrase_id_map), flush=True)
     pickle.dump(phrase_id_map, open(tmp_path + "phrase_id_map.pkl", "wb"))
     pickle.dump(id_phrase_map, open(tmp_path + "id_phrase_map.pkl", "wb"))
