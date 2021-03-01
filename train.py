@@ -1,4 +1,5 @@
 import sys
+import itertools
 import pickle
 import json
 import time
@@ -94,7 +95,7 @@ def train_word2vec(df, tokenizer, word_index, index_word):
         valid_size = 16  # Random set of words to evaluate similarity on.
         valid_window = 100
         # pick 8 samples from (0,100) and (1000,1100) each ranges. lower id implies more frequent
-        valid_examples = np.array(random.sample(range(valid_window), valid_size // 2))
+        valid_examples = np.array(random.sample(range(1, valid_window), valid_size // 2))
         valid_examples = np.append(valid_examples,
                                    random.sample(range(1000, 1000 + valid_window), valid_size // 2))
 
@@ -182,7 +183,19 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
                             except:
                                 count_dict[l] = label_motifs_dict[l][word]
                 else:
-                    entities = get_entity_from_col(row[mot_pat], mot_pat, config)
+                    size = len(mot_pat)
+                    if size == 1:
+                        first = mot_pat[0]
+                        entities = get_entity_from_col(row[first], first, config)
+                    elif size == 2:
+                        first = mot_pat[0]
+                        second = mot_pat[1]
+                        first_ents = get_entity_from_col(row[first], first, config)
+                        second_ents = get_entity_from_col(row[second], second, config)
+                        entities = set(itertools.product(first_ents, second_ents))
+                    else:
+                        raise Exception(
+                            "Motif patterns of size more than 2 not yet handled but can be easily extended.")
                     for l in labels:
                         seed_entities = set(label_motifs_dict[l].keys())
                         int_ents = list(entities.intersection(seed_entities))
