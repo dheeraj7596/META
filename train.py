@@ -393,7 +393,7 @@ def main(data_path, tmp_path, print_flag=True):
     motpat_label_motifs_dict = {}
     for mot_pat in entity_node_id_dict:
         if mot_pat == "phrase":
-            motpat_label_motifs_dict[mot_pat] = label_term_dict
+            motpat_label_motifs_dict[mot_pat] = modify(label_term_dict)
         else:
             motpat_label_motifs_dict[mot_pat] = {}
 

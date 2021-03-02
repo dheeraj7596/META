@@ -165,3 +165,12 @@ def print_label_motifs_dict(label_entity_dict):
         print("Number of entities: ", len(label_entity_dict[label]), flush=True)
         for key in label_entity_dict[label]:
             print(key, label_entity_dict[label][key], flush=True)
+
+
+def modify(label_term_dict):
+    for l in label_term_dict:
+        temp = {}
+        for t in label_term_dict[l]:
+            temp[t] = 1
+        label_term_dict[l] = temp
+    return label_term_dict
