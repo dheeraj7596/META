@@ -166,7 +166,7 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
             flag = 0
             for mot_pat in motpat_label_motifs_dict:
                 label_motifs_dict = motpat_label_motifs_dict[mot_pat]
-                if len(label_motifs_dict) < 0:
+                if len(label_motifs_dict) == 0:
                     continue
                 if mot_pat == "phrase":
                     tokens = tokenizer.texts_to_sequences([row["text"]])[0]
@@ -174,6 +174,8 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
                     for tok in tokens:
                         words.append(index_word[tok])
                     for l in labels:
+                        if len(label_motifs_dict[l]) == 0:
+                            continue
                         seed_words = set(label_motifs_dict[l].keys())
                         int_words = list(set(words).intersection(seed_words))
                         for word in int_words:
@@ -197,6 +199,8 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
                         raise Exception(
                             "Motif patterns of size more than 2 not yet handled but can be easily extended.")
                     for l in labels:
+                        if len(label_motifs_dict[l]) == 0:
+                            continue
                         seed_entities = set(label_motifs_dict[l].keys())
                         int_ents = list(entities.intersection(seed_entities))
                         for ent in int_ents:
