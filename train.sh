@@ -1,6 +1,8 @@
-GPU=$1
-dataset_path=$2
-tmp_path=$3
+use_gpu=$1
+GPU=$2
+dataset_path=$3
+tmp_path=$4
+print_flag=$5
 
 echo "Cloning AutoPhrase.."
 git clone https://github.com/shangjingbo1226/AutoPhrase.git AutoPhrase
@@ -18,3 +20,4 @@ cd ..
 cp AutoPhrase/models/DBLP/segmentation.txt ${tmp_path}/segmentation.txt
 python3 util/parse_autophrase_output.py ${dataset_path} ${tmp_path}
 python3 preprocess.py ${dataset_path} ${tmp_path}
+python3 train.py ${dataset_path} ${tmp_path} ${use_gpu} ${GPU} ${print_flag}

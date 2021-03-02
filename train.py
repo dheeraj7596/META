@@ -420,6 +420,7 @@ if __name__ == "__main__":
     tmp_path = sys.argv[2]
     use_gpu = int(sys.argv[3])
     gpu_id = int(sys.argv[4])
+    print_flag = bool(int(sys.argv[5]))
 
     if use_gpu:
         os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_id)
@@ -432,5 +433,6 @@ if __name__ == "__main__":
 
     main(
         data_path=data_path,
-        tmp_path=tmp_path
+        tmp_path=tmp_path,
+        print_flag=print_flag
     )
