@@ -385,13 +385,9 @@ def main(data_path, tmp_path, print_flag=True):
     word_to_index, index_to_word = create_index(tokenizer)
     labels, label_to_index, index_to_label = get_distinct_labels(df)
 
-    try:
-        embedding_matrix = pickle.load(open(data_path + "embedding_matrix.pkl", "rb"))
-        print("Embedding matrix available.. Loading embedding matrix..", flush=True)
-    except:
-        print("Training Word2Vec to get embedding matrix..", flush=True)
-        embedding_matrix = train_word2vec(df, tokenizer, word_to_index, index_to_word)
-        pickle.dump(embedding_matrix, open(data_path + "embedding_matrix.pkl", "wb"))
+    print("Training Word2Vec to get embedding matrix..", flush=True)
+    embedding_matrix = train_word2vec(df, tokenizer, word_to_index, index_to_word)
+    pickle.dump(embedding_matrix, open(data_path + "embedding_matrix.pkl", "wb"))
 
     motpat_label_motifs_dict = {}
     for mot_pat in entity_node_id_dict:
