@@ -1,0 +1,8 @@
+{
+  "authors": {
+    "separator" : ","
+  },
+  "year": {
+    "separator" : null
+  }
+}

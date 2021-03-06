@@ -1,0 +1,41 @@
+{
+  "computer vision": [
+    "video",
+    "face recognition"
+  ],
+  "computational linguistics": [
+    "semantic",
+    "machine translation"
+  ],
+  "biomedical engineering": [
+    "protein",
+    "proteins"
+  ],
+  "software engineering": [
+    "debugging",
+    "c++"
+  ],
+  "graphics": [
+    "design",
+    "user experience"
+  ],
+  "data mining": [
+    "social network",
+    "text mining"
+  ],
+  "security and cryptography": [
+    "diffie-hellman",
+    "intrusion detection"
+  ],
+  "signal processing": [
+    "wireless sensor networks"
+  ],
+  "robotics": [
+    "robot",
+    "path planning"
+  ],
+  "theory": [
+    "linear programming",
+    "constraint satisfaction"
+  ]
+}
