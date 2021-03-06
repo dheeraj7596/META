@@ -96,8 +96,9 @@ def get_motif_patterns(df, motif_lines):
     meta_cols = set([])
     for line in motif_lines:
         motif = line.strip().split(",")
-        if len(set(motif).intersection(cols)) != len(motif):
-            raise Exception("Unknown column in motif found ", motif)
+        for m in motif:
+            if m not in cols:
+                raise Exception("Unknown column in motif found ", motif)
         motif_patterns.append(tuple(motif))
         meta_cols.update(motif)
     return meta_cols, motif_patterns
@@ -139,7 +140,10 @@ def create_dicts(df, motif_patterns, config):
             for i, row in df.iterrows():
                 first_ents = get_entity_from_col(row[first], first, config)
                 second_ents = get_entity_from_col(row[second], second, config)
-                temp_ents = set(itertools.product(first_ents, second_ents))
+                if first == second:
+                    temp_ents = set(itertools.combinations(first_ents, 2))
+                else:
+                    temp_ents = set(itertools.product(first_ents, second_ents))
                 entity_set.update(temp_ents)
                 for temp_ent in temp_ents:
                     try:
@@ -184,7 +188,10 @@ def create_graphs(df, motif_patterns, entity_node_id_dict, node_count_dict, conf
             for i, row in df.iterrows():
                 first_ents = get_entity_from_col(row[first], first, config)
                 second_ents = get_entity_from_col(row[second], second, config)
-                temp_ents = set(itertools.product(first_ents, second_ents))
+                if first == second:
+                    temp_ents = set(itertools.combinations(first_ents, 2))
+                else:
+                    temp_ents = set(itertools.product(first_ents, second_ents))
                 for e in temp_ents:
                     edges.append([i, entity_id[e]])
                     weights.append(1)

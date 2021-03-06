@@ -194,7 +194,10 @@ def train_classifier(df, tokenizer, embedding_matrix, labels, motpat_label_motif
                         second = mot_pat[1]
                         first_ents = get_entity_from_col(row[first], first, config)
                         second_ents = get_entity_from_col(row[second], second, config)
-                        entities = set(itertools.product(first_ents, second_ents))
+                        if first == second:
+                            entities = set(itertools.combinations(first_ents, 2))
+                        else:
+                            entities = set(itertools.product(first_ents, second_ents))
                     else:
                         raise Exception(
                             "Motif patterns of size more than 2 not yet handled but can be easily extended.")
