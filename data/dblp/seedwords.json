@@ -1,41 +1,52 @@
 {
   "computer vision": [
-    "video",
-    "face recognition"
+    "object detection",
+    "face detection",
+    "object tracking"
   ],
   "computational linguistics": [
-    "semantic",
-    "machine translation"
+    "linguistic",
+    "speech recognition",
+    "word sense disambiguation"
   ],
   "biomedical engineering": [
-    "protein",
-    "proteins"
+    "brain",
+    "medical",
+    "mri"
   ],
   "software engineering": [
-    "debugging",
-    "c++"
+    "object-oriented",
+    "register allocation",
+    "software design"
   ],
   "graphics": [
     "design",
-    "user experience"
+    "user interface",
+    "benchmark circuits"
   ],
   "data mining": [
-    "social network",
-    "text mining"
+    "data mining",
+    "association rules",
+    "recommender systems"
   ],
   "security and cryptography": [
-    "diffie-hellman",
-    "intrusion detection"
+    "malware",
+    "cryptography",
+    "diffie-hellman"
   ],
   "signal processing": [
-    "wireless sensor networks"
+    "channel",
+    "wireless",
+    "csi"
   ],
   "robotics": [
     "robot",
+    "mobile robot",
     "path planning"
   ],
   "theory": [
-    "linear programming",
-    "constraint satisfaction"
+    "nondeterministic",
+    "polynomials",
+    "finite automata"
   ]
 }
