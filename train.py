@@ -66,7 +66,7 @@ def train_word2vec(df, tokenizer, word_index, index_word):
         #     labels = tf.placeholder(tf.int32, [None, None], name='labels')
         labels = tf.placeholder(tf.int32, [None, None], name='labels')
 
-    n_vocab = len(int_to_vocab)
+    n_vocab = len(int_to_vocab) + 1
     n_embedding = 100
     with train_graph.as_default():
         embedding = tf.Variable(tf.random_uniform((n_vocab, n_embedding), -1, 1))
