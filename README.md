@@ -56,14 +56,17 @@ $ ./train.sh 1 4 <DATA_PATH TO BOOKS> <TEMP_DIR PATH> 1
 
 This project is based on ```python==3.7```. The dependencies are as follow:
 ```
-keras-contrib==2.0.8
+keras==2.1.5
 scikit-learn==0.21.3
 scipy=1.3.1
 gensim==3.8.1
 numpy==1.17.2
 fast-pagerank==0.0.4
-tensorflow
+tensorflow==1.15
 nltk
+bleach==3.1.5
+pandas
+beautifulsoup4
 ```
 
 ## Citation
